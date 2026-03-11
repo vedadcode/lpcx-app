@@ -1143,6 +1143,7 @@ function LeftCurveDesign() {
         background: "#2FA4C9"
       }}
     >
+      
       <div
         style={{
           position: "absolute",
@@ -1171,18 +1172,58 @@ function LeftCurveDesign() {
       />
 
       {/* dark blue */}
-      <div
+      
+
+      <svg
+        style={{paddingLeft: "130px", cursor: "pointer"}}
+      
+    >
+      <defs>
+        <path
+          id="heroCirclePath"
+          d="M 60,60 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"
+        />
+      </defs>
+      <a href="#">
+       <image
+        href="/public/camera.png"
+        x="42"
+        y="42"
+        width="40"
+        height="40"
+     
+      /></a>
+       <style>{`
+       .rotatingText {
+          transform-origin: 60px 60px;
+          animation: rotateCircle 6s linear infinite;
+        }
+
+        @keyframes rotateCircle {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+       `}</style>
+      <text
+        fill="#1e2b46"
+        fontFamily="Arial Black, Arial, sans-serif"
+        className="rotatingText"
+        
         style={{
-          position: "absolute",
-          width: "700px",
-          height: "420px",
-          background: "#2FA4C9",
-          borderRadius: "50%",
-          left: "140px",
-          top: "-210px",
-          
+          fontSize: "8px",
+          fontWeight: 900,
+          letterSpacing: "3px",
         }}
-      />
+      >
+        <textPath href="#heroCirclePath" startOffset="0%">
+          CLICK TO SCAN
+        </textPath>
+      </text>
+    </svg>
       
 
       {/* background blend */}
@@ -1208,6 +1249,7 @@ function Hero() {
       }}
     >
       <LeftCurveDesign />
+      
 
       {/* Content only (plain background to restore layout) */}
       <div
@@ -1410,11 +1452,16 @@ function BrandLogo({ brand, style: extraStyle }) {
 
 function BrandLogosStrip() {
   const [slots, setSlots] = useState(() => {
-    const initial = [];
     const shuffled = [...BRANDS].sort(() => Math.random() - 0.5);
-    for (let i = 0; i < 5; i++) {
-      initial.push({ brand: shuffled[i], key: i, delay: i * 0.4 });
-    }
+
+    const firstTwo = shuffled.slice(0, 2);
+    const lastTwo = shuffled.slice(2, 4);
+
+    const initial = [
+      ...firstTwo.map((brand, i) => ({ brand, key: i, delay: i * 0.4 })),
+      ...lastTwo.map((brand, i) => ({ brand, key: i + 2, delay: (i + 2) * 0.4 })),
+    ];
+
     return initial;
   });
   const [cycle, setCycle] = useState(0);
@@ -1438,24 +1485,78 @@ function BrandLogosStrip() {
   }, []);
 
   return (
-    <div className="brand-strip" style={{
-      display: "flex",
-      justifyContent: "center",
-      gap: 16,
-      padding: "10px 0 24px",
-      minHeight: 110,
-      alignItems: "center",
-    }}>
-      {slots.map((slot) => (
-        <div
-          key={slot.key}
-          className="brand-slot"
-          style={{ animationDelay: `${slot.delay}s` }}
-        >
-          <BrandLogo brand={slot.brand} />
-        </div>
-      ))}
+    <div
+  className="brand-strip"
+  style={{
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-around", 
+                     
+    padding: "10px 80px 24px",
+    minHeight: 110,
+  }}
+>
+  {/* First two brands */}
+  {slots.slice(0, 2).map((slot) => (
+    <div
+      key={slot.key}
+      className="brand-slot"
+      style={{ animationDelay: `${slot.delay}s` }}
+    >
+      <BrandLogo brand={slot.brand} />
     </div>
+  ))}
+
+  <button
+    style={{
+      background: "transparent",
+      border: "none",
+      fontWeight: 100,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: 24,
+      
+    }}
+   
+   
+  >
+    &#8592; {/* ← Unicode arrow */}
+  </button>
+
+  {/* Middle Text */}
+  <div style={{ fontWeight: 100, fontSize: 22, textAlign: "center" }}>
+    PARTNERS
+  </div>
+
+  <button
+    style={{
+      background: "transparent",
+      border: "none",
+      fontWeight: 100,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: 24,
+      color: "#333",
+    }}
+    
+    
+  >
+    &#8594; {/* → Unicode arrow */}
+  </button>
+
+  {/* Last two brands */}
+  {slots.slice(2, 4).map((slot) => (
+    <div
+      key={slot.key}
+      className="brand-slot"
+      style={{ animationDelay: `${slot.delay}s` }}
+    >
+      <BrandLogo brand={slot.brand} />
+    </div>
+  ))}
+</div>
   );
 }
 
@@ -1464,8 +1565,18 @@ function HomePage({ onCardClick, flippingDraw }) {
   // Carousel shows 5 cards at a time and slides 1 card per click
   const VISIBLE = 5;
   const [carouselIdx, setCarouselIdx] = useState(0);
+  const maxIdx = Math.max(0, DRAWS.length - VISIBLE);
   const canPrev = carouselIdx > 0;
-  const canNext = carouselIdx < DRAWS.length - VISIBLE;
+  const canNext = carouselIdx < maxIdx;
+  const [isCarouselPaused, setIsCarouselPaused] = useState(false);
+
+  useEffect(() => {
+    if (maxIdx === 0 || isCarouselPaused) return;
+    const interval = setInterval(() => {
+      setCarouselIdx(i => (i >= maxIdx ? 0 : i + 1));
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [maxIdx, isCarouselPaused]);
 
   return (
     <div>
@@ -1481,7 +1592,12 @@ function HomePage({ onCardClick, flippingDraw }) {
         }}>UPCOMING DRAWS</h2>
 
         {/* Carousel - smooth sliding */}
-        <div className="carousel-row" style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+        <div
+          className="carousel-row"
+          style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}
+          onMouseEnter={() => setIsCarouselPaused(true)}
+          onMouseLeave={() => setIsCarouselPaused(false)}
+        >
           <button
             onClick={() => setCarouselIdx(i => Math.max(0, i - 1))}
             disabled={!canPrev}
@@ -1531,7 +1647,7 @@ function HomePage({ onCardClick, flippingDraw }) {
           </div>
 
           <button
-            onClick={() => setCarouselIdx(i => Math.min(DRAWS.length - VISIBLE, i + 1))}
+            onClick={() => setCarouselIdx(i => Math.min(maxIdx, i + 1))}
             disabled={!canNext}
             className="carousel-nav"
             style={{
@@ -1558,7 +1674,7 @@ function HomePage({ onCardClick, flippingDraw }) {
 
       {/* ── How To Play Mid-Section ── */}
       <div style={{ background: "#112f56", padding: "16px 20px", minHeight: 140, borderTop: `1px solid ${C.borderLight}`, borderBottom: `1px solid ${C.borderLight}` }}>
-        <div className="howto-row" style={{ maxWidth: 960, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 40 }}>
+        <div className="howto-row" style={{ maxWidth: 1050, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 40 }}>
           <div>
             <div style={{ color: "#ffffff", fontWeight: 800, fontSize: 15, marginBottom: 16, letterSpacing: 0.5 }}>HOW TO PLAY THE LPCX</div>
             {[
@@ -1598,7 +1714,7 @@ function HomePage({ onCardClick, flippingDraw }) {
       </div>
 
       {/* ── Latest Results ── */}
-      <div style={{ maxWidth: 960, margin: "0 auto", padding: "30px 20px" }}>
+      <div style={{ maxWidth: 1050, margin: "0 auto", padding: "20px 20px" }}>
         <h2 style={{
           textAlign: "center", color: C.textDark,
           letterSpacing: 2, fontSize: 18, fontWeight: 800,
