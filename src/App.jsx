@@ -129,6 +129,160 @@ styleSheet.textContent = `
     transform: translateY(-4px);
     box-shadow: 0 6px 16px rgba(0,0,0,0.08);
   }
+  /* Responsive layout helpers */
+  .nav-button {
+    white-space: nowrap;
+  }
+  .carousel-card {
+    scroll-snap-align: start;
+  }
+
+  @media (max-width: 960px) {
+    .topbar-inner {
+      flex-wrap: wrap !important;
+    }
+    .nav-inner {
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      gap: 6px !important;
+      padding: 6px 10px !important;
+    }
+    .nav-button {
+      padding: 10px 14px !important;
+      font-size: 11px !important;
+    }
+    .brand-strip {
+      flex-wrap: wrap !important;
+    }
+    .footer-cols {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 24px !important;
+    }
+    .footer-icons {
+      flex-wrap: wrap !important;
+      gap: 16px !important;
+    }
+    .draw-grid {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+    .howto-row {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+    }
+    .howto-hero {
+      text-align: left !important;
+      margin-left: 0 !important;
+      margin-top: 16px !important;
+    }
+    .howto-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .account-tabs {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .topbar-inner {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 10px !important;
+    }
+    .topbar-actions {
+      width: 100% !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+    }
+    .topbar-input {
+      width: 100% !important;
+      flex: 1 1 100% !important;
+    }
+    .hero-content {
+      text-align: center !important;
+      margin-left: 0 !important;
+      margin-top: 0 !important;
+    }
+    .hero-title {
+      font-size: 22px !important;
+    }
+    .hero-subtitle {
+      font-size: 12px !important;
+    }
+    .hero-curve {
+      display: none !important;
+    }
+    .nav-button {
+      padding: 8px 10px !important;
+      font-size: 10px !important;
+      letter-spacing: 0.3px !important;
+    }
+    .carousel-nav {
+      display: none !important;
+    }
+    .carousel-viewport {
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+    }
+    .carousel-track {
+      transform: none !important;
+    }
+    .carousel-card {
+      width: 80% !important;
+      padding: 0 8px !important;
+    }
+    .brand-strip {
+      gap: 10px !important;
+      justify-content: center !important;
+    }
+    .result-row {
+      grid-template-columns: 1fr !important;
+    }
+    .draw-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .filter-row {
+      flex-direction: column !important;
+    }
+    .form-card {
+      padding: 24px 18px !important;
+    }
+    .account-tabs {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .account-form-row {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 6px !important;
+    }
+    .account-form-row label {
+      width: auto !important;
+    }
+    .footer-cols {
+      grid-template-columns: 1fr !important;
+    }
+    .footer-icons {
+      justify-content: center !important;
+    }
+    .results-actions {
+      flex-direction: column !important;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .draw-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .carousel-card {
+      width: 92% !important;
+    }
+    .hero-title {
+      font-size: 20px !important;
+    }
+    .topbar-actions button {
+      flex: 1 1 100% !important;
+    }
+  }
 `;
 if (!document.getElementById("lpcx-styles")) {
   styleSheet.id = "lpcx-styles";
@@ -143,9 +297,9 @@ const C = {
   blueMid: "#3b7dbd",
   blueAccent: "#4a90d9",
   blueLight: "#6dc8e8",
-  heroBg: "##0f2d52",
+  heroBg: "#ffffff",
   white: "#ffffff",
-  offWhite: "#f0f3f7",
+  offWhite: "#ffffff",
   greyBg: "#e8ecf2",
   textDark: "#1a2744",
   textMuted: "#7a8fa8",
@@ -715,6 +869,7 @@ function DrawCard({ draw, onClick, isFlipping }) {
       display: "flex",
       flexDirection: "column",
       minWidth: 0,
+      maxHeight: '300px',
       boxShadow: "0 2px 12px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)",
     }}>
       {/* Top bar with name, points, and info icon */}
@@ -770,7 +925,7 @@ function DrawCard({ draw, onClick, isFlipping }) {
       <div
         className="icon-area"
         style={{
-          padding: "18px 0 10px",
+          padding: "18px 0 3px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -805,7 +960,7 @@ function DrawCard({ draw, onClick, isFlipping }) {
         </div>
       </div>
 
-      {/* BET NOW button with gradient */}
+      {/* ENROLL NOW button with gradient */}
       <button className="bet-btn" style={{
         width: "100%",
         background: "#173b63",
@@ -817,7 +972,7 @@ function DrawCard({ draw, onClick, isFlipping }) {
         letterSpacing: 2,
         cursor: "pointer",
         textTransform: "uppercase",
-      }}>BET NOW</button>
+      }}>ENROLL NOW</button>
     </div>
   );
 }
@@ -866,26 +1021,12 @@ function SingleResult({ item }) {
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
           <span style={{ fontFamily: FONT_MAIN, fontWeight: 700, fontSize: 12, color: C.textDark }}>{item.winnerName}</span>
-          <span style={{ fontFamily: FONT_SUBJECT, fontSize: 11, color: C.textGrey }}>{item.drawnAt || "—"}</span>
+          
         </div>
         <div style={{ display: "flex", gap: 6, marginTop: 6, flexWrap: "wrap" }}>
-          <span
-            className="result-company-label"
-            style={{
-              display: "inline-block",
-              padding: "4px 10px",
-              borderRadius: 4,
-              fontSize: 11,
-              fontWeight: 700,
-              fontFamily: FONT_MAIN,
-              color: C.navyDark,
-              background: C.offWhite,
-              border: `1px solid ${C.cardBorder}`,
-              boxShadow: "0 0 12px rgba(74, 144, 217, 0.35)",
-            }}
-          >
-            {item.companyName}
-          </span>
+          
+          <span style={{ fontFamily: FONT_SUBJECT, fontSize: 11, color: C.textGrey }}>{item.drawnAt || "—"}</span>
+          
         </div>
       </div>
       <button style={{
@@ -899,7 +1040,7 @@ function SingleResult({ item }) {
         fontWeight: 700,
         cursor: "pointer",
         letterSpacing: 0.5,
-      }}>BET</button>
+      }}>{item.companyName}</button>
     </div>
   );
 }
@@ -943,10 +1084,10 @@ const btnPrimary = {
 // ── Header (Top bar) ────────────────────────────────────────────────────────
 function Header({ page, setPage, loggedIn, setLoggedIn }) {
   return (
-    <div style={{ background: C.white, borderBottom: `1px solid ${C.borderLight}` }}>
-      <div style={{
+    <div className="topbar" style={{ background: C.white, borderBottom: `1px solid ${C.borderLight}` }}>
+      <div className="topbar-inner" style={{
         maxWidth: 960, margin: "0 auto", padding: "10px 20px",
-        display: "flex", alignItems: "center", gap: 14,
+        display: "flex", alignItems: "center", gap: 14, maxHeight: "20px"
       }}>
         {/* Logo */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginRight: "auto" }}>
@@ -961,9 +1102,9 @@ function Header({ page, setPage, loggedIn, setLoggedIn }) {
           }}>LPCX</span>
         </div>
         {!loggedIn ? (
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <input placeholder="Email" style={{ ...inputStyle, width: 130, padding: "7px 12px" }} />
-            <input placeholder="Password" type="password" style={{ ...inputStyle, width: 130, padding: "7px 12px" }} />
+          <div className="topbar-actions" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <input className="topbar-input" placeholder="Email" style={{ ...inputStyle, width: 130, padding: "7px 12px" }} />
+            <input className="topbar-input" placeholder="Password" type="password" style={{ ...inputStyle, width: 130, padding: "7px 12px" }} />
             <button onClick={() => setLoggedIn(true)} style={{
               ...btnOutline,
               borderColor: C.navyDark,
@@ -975,7 +1116,7 @@ function Header({ page, setPage, loggedIn, setLoggedIn }) {
             }}>Register</button>
           </div>
         ) : (
-          <div style={{ display: "flex", gap: 10 }}>
+          <div className="topbar-actions" style={{ display: "flex", gap: 10 }}>
             <button onClick={() => setPage("account")} style={btnPrimary}>My Account</button>
             <button onClick={() => setLoggedIn(false)} style={btnOutline}>Logout</button>
           </div>
@@ -989,6 +1130,7 @@ function Header({ page, setPage, loggedIn, setLoggedIn }) {
 function LeftCurveDesign() {
   return (
     <div
+      className="hero-curve"
       style={{
         position: "absolute",
         left: 0,
@@ -997,18 +1139,34 @@ function LeftCurveDesign() {
         height: "100%",
         overflow: "hidden",
         pointerEvents: "none",
+        zIndex: 5,
+        background: "#2FA4C9"
       }}
     >
+      <div
+        style={{
+          position: "absolute",
+          width: "700px",
+          height: "420px",
+          background: "#0f2d52",
+          borderRadius: "48%",
+          left: "400px",
+          top: "-220px",
+          zIndex: 12
+        }}
+      />
       {/* turquoise */}
       <div
         style={{
           position: "absolute",
           width: "700px",
           height: "420px",
-          background: "#2FA4C9",
+          background: "#4F77A6",
           borderRadius: "50%",
-          left: "-260px",
-          top: "-220px",
+          left: "320px",
+          top: "-230px",
+          
+          zIndex: 10
         }}
       />
 
@@ -1018,24 +1176,18 @@ function LeftCurveDesign() {
           position: "absolute",
           width: "700px",
           height: "420px",
-          background: "#4F77A6",
+          background: "#2FA4C9",
           borderRadius: "50%",
-          left: "-140px",
+          left: "140px",
           top: "-210px",
+          
         }}
       />
+      
 
       {/* background blend */}
       <div
-        style={{
-          position: "absolute",
-          width: "700px",
-          height: "420px",
-          background: "#163962",
-          borderRadius: "50%",
-          left: "20px",
-          top: "-240px",
-        }}
+        
       />
     </div>
   );
@@ -1045,18 +1197,21 @@ function LeftCurveDesign() {
 function Hero() {
   return (
     <div
+      className="hero"
       style={{
         background: "#0f2d52",
         position: "relative",
         overflow: "hidden",
         padding: "16px 20px", // keep your height
-        minHeight: 140,
+        minHeight: 120,
+        
       }}
     >
       <LeftCurveDesign />
 
       {/* Content only (plain background to restore layout) */}
       <div
+        className="hero-content"
         style={{
           maxWidth: 960,
           margin: "0 auto",
@@ -1068,6 +1223,7 @@ function Hero() {
         }}
       >
         <div
+          className="hero-subtitle"
           style={{
             color: "#4577ad",
             fontSize: 14,
@@ -1078,6 +1234,7 @@ function Hero() {
           Over 8000 lucky draws a week,
         </div>
         <div
+          className="hero-title"
           style={{
             color: "#ffffff",
             fontSize: 28,
@@ -1104,12 +1261,12 @@ function NavBar({ page, setPage }) {
     { label: "HOW TO PLAY", key: "how-to-play" },
   ];
   return (
-    <div style={{ background: C.offWhite, borderBottom: `1px solid ${C.borderLight}` }}>
-<div style={{ maxWidth: 960, margin: "0 auto", display: "flex", justifyContent: "center" }}>
+    <div className="nav" style={{ background: C.offWhite, borderBottom: `1px solid ${C.borderLight}`, padding: '3px' }}>
+<div className="nav-inner" style={{ maxWidth: 960, margin: "0 auto", display: "flex", justifyContent: "center" }}>
         {items.map(item => {
           const active = page === item.key;
           return (
-            <button key={item.key} onClick={() => setPage(item.key)} style={{
+            <button key={item.key} className="nav-button" onClick={() => setPage(item.key)} style={{
               background: active ? C.blueAccent : "transparent",
               color: active ? C.white : C.textDark,
               border: "none",
@@ -1137,11 +1294,11 @@ function Footer() {
     <>
       {/* Info columns */}
       <div style={{ background: C.footerBg, padding: "40px 20px" }}>
-        <div style={{ maxWidth: 960, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 40 }}>
+        <div className="footer-cols" style={{ maxWidth: 960, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 40 }}>
           {[
             {
               title: "HOW TO PLAY THE LPCX",
-              text: "Register and pick from our wide range of lucky draws from around the world. New draws run every day so you can play and win any day. Start by choosing a draw and tapping the \"BET NOW\" button."
+              text: "Register and pick from our wide range of lucky draws from around the world. New draws run every day so you can play and win any day. Start by choosing a draw and tapping the \"ENROLL NOW\" button."
             },
             {
               title: "PICK YOUR DRAW",
@@ -1162,7 +1319,7 @@ function Footer() {
 
       {/* Icons row */}
       <div style={{ background: C.footerDark, padding: "30px 20px" }}>
-        <div style={{ maxWidth: 960, margin: "0 auto", display: "flex", justifyContent: "space-around" }}>
+        <div className="footer-icons" style={{ maxWidth: 960, margin: "0 auto", display: "flex", justifyContent: "space-around" }}>
           {[
             { icon: "🏛️", label: "Widest Selection" },
             { icon: "🌐", label: "Global Lucky Draws" },
@@ -1281,7 +1438,7 @@ function BrandLogosStrip() {
   }, []);
 
   return (
-    <div style={{
+    <div className="brand-strip" style={{
       display: "flex",
       justifyContent: "center",
       gap: 16,
@@ -1313,7 +1470,7 @@ function HomePage({ onCardClick, flippingDraw }) {
   return (
     <div>
       {/* ── Upcoming Draws ── */}
-      <div style={{ maxWidth: 960, margin: "0 auto", padding: "30px 20px 0" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "10px 20px 0" }}>
       <h2 style={{
           textAlign: "center",
           color: C.textDark,
@@ -1324,10 +1481,11 @@ function HomePage({ onCardClick, flippingDraw }) {
         }}>UPCOMING DRAWS</h2>
 
         {/* Carousel - smooth sliding */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+        <div className="carousel-row" style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
           <button
             onClick={() => setCarouselIdx(i => Math.max(0, i - 1))}
             disabled={!canPrev}
+            className="carousel-nav"
             style={{
               background: "transparent",
               border: "none",
@@ -1345,8 +1503,8 @@ function HomePage({ onCardClick, flippingDraw }) {
             </svg>
           </button>
 
-          <div style={{ flex: 1, overflow: "hidden" }}>
-            <div style={{
+          <div className="carousel-viewport" style={{ flex: 1, overflow: "hidden" }}>
+            <div className="carousel-track" style={{
               display: "flex",
               transition: "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
               transform: `translateX(-${carouselIdx * (100 / VISIBLE)}%)`,
@@ -1354,6 +1512,7 @@ function HomePage({ onCardClick, flippingDraw }) {
               {DRAWS.map((d, i) => (
                 <div
                   key={i}
+                  className="carousel-card"
                   style={{
                     width: `${100 / VISIBLE}%`,
                     flexShrink: 0,
@@ -1374,6 +1533,7 @@ function HomePage({ onCardClick, flippingDraw }) {
           <button
             onClick={() => setCarouselIdx(i => Math.min(DRAWS.length - VISIBLE, i + 1))}
             disabled={!canNext}
+            className="carousel-nav"
             style={{
               background: "transparent",
               border: "none",
@@ -1398,7 +1558,7 @@ function HomePage({ onCardClick, flippingDraw }) {
 
       {/* ── How To Play Mid-Section ── */}
       <div style={{ background: "#112f56", padding: "16px 20px", minHeight: 140, borderTop: `1px solid ${C.borderLight}`, borderBottom: `1px solid ${C.borderLight}` }}>
-        <div style={{ maxWidth: 960, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 40 }}>
+        <div className="howto-row" style={{ maxWidth: 960, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 40 }}>
           <div>
             <div style={{ color: "#ffffff", fontWeight: 800, fontSize: 15, marginBottom: 16, letterSpacing: 0.5 }}>HOW TO PLAY THE LPCX</div>
             {[
@@ -1421,7 +1581,7 @@ function HomePage({ onCardClick, flippingDraw }) {
               </div>
             ))}
           </div>
-          <div style={{ textAlign: "right", minWidth: 240, marginLeft: 40, marginTop: 10 }}>
+          <div className="howto-hero" style={{ textAlign: "right", minWidth: 240, marginLeft: 40, marginTop: 10 }}>
             <div style={{
               color: "#4577ad", fontSize: 16,
               fontStyle: "italic", marginBottom: 4,
@@ -1443,7 +1603,7 @@ function HomePage({ onCardClick, flippingDraw }) {
           textAlign: "center", color: C.textDark,
           letterSpacing: 2, fontSize: 18, fontWeight: 800,
           marginBottom: 24, fontFamily: FONT_MAIN,
-        }}>LATEST RESULTS</h2>
+        }}>WINNER RESULTS</h2>
 
         <div style={{
           border: `1px solid ${C.cardBorder}`,
@@ -1452,7 +1612,7 @@ function HomePage({ onCardClick, flippingDraw }) {
           background: C.white,
         }}>
           {RESULTS.filter((_, i) => i % 2 === 0).map((r, i) => (
-            <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+            <div key={i} className="result-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
               <SingleResult item={r} />
               <div>
                 <SingleResult item={RESULTS[i * 2 + 1]} />
@@ -1477,7 +1637,7 @@ function RegisterPage({ setPage, setLoggedIn }) {
   return (
     <div style={{ maxWidth: 600, margin: "40px auto", padding: "0 20px" }}>
       <h2 style={{ textAlign: "center", color: C.textDark, letterSpacing: 2, marginBottom: 30, fontFamily: "'Georgia', serif" }}>REGISTER</h2>
-      <div style={{ background: C.white, border: `1px solid ${C.cardBorder}`, borderRadius: 4, padding: "40px 50px" }}>
+      <div className="form-card" style={{ background: C.white, border: `1px solid ${C.cardBorder}`, borderRadius: 4, padding: "40px 50px" }}>
         {[
           { ph: "Full Name", key: "name", type: "text" },
           { ph: "Email", key: "email", type: "email" },
@@ -1515,7 +1675,7 @@ function LuckyNumbersPage({ onCardClick, flippingDraw }) {
       <p style={{ textAlign: "center", color: C.textMuted, fontSize: 13, maxWidth: 700, margin: "0 auto 24px", lineHeight: 1.6 }}>
         With lucky draws from around the world we give you more choice and more chances to <strong>WIN BIG!</strong> Place a bet on your favourite draw now.
       </p>
-      <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
+      <div className="filter-row" style={{ display: "flex", gap: 10, marginBottom: 16 }}>
         <select style={{ ...inputStyle, flex: 1 }}><option>Select country</option></select>
         <input placeholder="Search" style={{ ...inputStyle, flex: 2 }} />
       </div>
@@ -1529,7 +1689,7 @@ function LuckyNumbersPage({ onCardClick, flippingDraw }) {
           }}>{l}</button>
         ))}
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
+      <div className="draw-grid" style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
         {DRAWS.map((d, i) => (
           <DrawCard
             key={i}
@@ -1569,7 +1729,7 @@ function NextDrawsPage() {
       </div>
       <div style={{ border: `1px solid ${C.cardBorder}`, borderRadius: 4, overflow: "hidden", background: C.white }}>
         {RESULTS.filter((_, i) => i % 2 === 0).map((r, i) => (
-          <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+          <div key={i} className="result-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
             <SingleResult item={r} />
             <div>
               <SingleResult item={RESULTS[i * 2 + 1]} />
@@ -1591,7 +1751,7 @@ function ResultsPage() {
       <h2 style={{ textAlign: "center", color: C.textDark, letterSpacing: 1, marginBottom: 24, fontWeight: 700, fontFamily: FONT_MAIN }}>LATEST RESULTS</h2>
       <div style={{ border: `1px solid ${C.cardBorder}`, borderRadius: 4, overflow: "hidden", background: C.white }}>
         {RESULTS.filter((_, i) => i % 2 === 0).map((r, i) => (
-          <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+          <div key={i} className="result-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
             <SingleResult item={r} />
             <div>
               <SingleResult item={RESULTS[i * 2 + 1]} />
@@ -1599,7 +1759,7 @@ function ResultsPage() {
           </div>
         ))}
       </div>
-      <div style={{ textAlign: "center", marginTop: 20, display: "flex", justifyContent: "center", gap: 12 }}>
+      <div className="results-actions" style={{ textAlign: "center", marginTop: 20, display: "flex", justifyContent: "center", gap: 12 }}>
         <button style={{ ...btnOutline, padding: "10px 30px" }}>LOAD MORE</button>
         <button style={{ ...btnOutline, padding: "10px 30px" }}>VIEW ALL RESULTS</button>
       </div>
@@ -1619,7 +1779,7 @@ function AccountPage() {
   ];
   return (
     <div style={{ maxWidth: 800, margin: "30px auto", padding: "0 20px" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 10, marginBottom: 24 }}>
+      <div className="account-tabs" style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 10, marginBottom: 24 }}>
         {tabs.map(t => (
           <button key={t.key} onClick={() => setTab(t.key)} style={{
             background: tab === t.key ? C.blueAccent : C.white,
@@ -1633,7 +1793,7 @@ function AccountPage() {
         ))}
       </div>
       {tab === "deposit" && (
-        <div style={{ background: C.white, border: `1px solid ${C.cardBorder}`, borderRadius: 4, padding: "40px 50px" }}>
+        <div className="form-card" style={{ background: C.white, border: `1px solid ${C.cardBorder}`, borderRadius: 4, padding: "40px 50px" }}>
           <h3 style={{ textAlign: "center", color: C.textDark, marginBottom: 6 }}>M-Pesa deposit</h3>
           <p style={{ textAlign: "center", color: C.textMuted, fontSize: 13, marginBottom: 24 }}>Enter your details below</p>
           {[
@@ -1643,7 +1803,7 @@ function AccountPage() {
             { label: "Last Name", val: "" },
             { label: "Email", val: "info@email.com" },
           ].map(({ label, val }) => (
-            <div key={label} style={{ display: "flex", alignItems: "center", borderBottom: `1px solid ${C.borderLight}`, padding: "12px 0" }}>
+            <div key={label} className="account-form-row" style={{ display: "flex", alignItems: "center", borderBottom: `1px solid ${C.borderLight}`, padding: "12px 0" }}>
               <label style={{ width: 120, fontSize: 13, color: C.textDark, fontWeight: 600 }}>{label}</label>
               <input defaultValue={val} placeholder={label} style={{ ...inputStyle, flex: 1, border: "none", outline: "none", background: "transparent" }} />
             </div>
@@ -1670,9 +1830,9 @@ function HowToPlayPage() {
   return (
     <div style={{ maxWidth: 960, margin: "0 auto", padding: "40px 20px" }}>
       <h2 style={{ textAlign: "center", color: C.textDark, letterSpacing: 1, marginBottom: 40, fontWeight: 700 }}>HOW TO PLAY THE LPCX</h2>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 30 }}>
+      <div className="howto-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 30 }}>
         {[
-          { num: 1, title: "HOW TO PLAY THE LPCX", text: "Register and pick from our wide range of lucky draws from around the world. New draws run every day so you can play and win any day. Start by choosing a draw and tapping the \"BET NOW\" button." },
+          { num: 1, title: "HOW TO PLAY THE LPCX", text: "Register and pick from our wide range of lucky draws from around the world. New draws run every day so you can play and win any day. Start by choosing a draw and tapping the \"ENROLL NOW\" button." },
           { num: 2, title: "PICK YOUR DRAW", text: "Improve your odds by predicting 1, 2, 3 or 4 numbers in a draw using the \"BET TYPE\" option. Some draws include a bonus ball. Pick your numbers to match your chosen bet type." },
           { num: 3, title: "SUBMIT YOUR BET", text: "Enter your stake and place your bet. You will get confirmation by SMS or email. Winners are notified the same way and your slip shows winnings. All draw results are on this site." },
         ].map(({ num, title, text }) => (
